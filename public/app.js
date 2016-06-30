@@ -78,7 +78,7 @@
 
   // Login with facebook
   function loginWithFacebook() {
-      var provider = new firebase.auth.FaceBookAuthProvider();
+      var provider = new firebase.auth.FacebookAuthProvider();
       firebase.auth().signInWithPopup(provider).then(function(result) {
           userCredential(result);
       }).catch(function(err) {
@@ -86,8 +86,8 @@
       })
   }
   // Login with Github
-  function loginWithGitHub() {
-      var provider = new firebase.auth.GitHubAuthProvider();
+  function loginWithGithub() {
+      var provider = new firebase.auth.GithubAuthProvider();
       firebase.auth().signInWithPopup(provider).then(function(result) {
           userCredential(result);
       }).catch(function(err) {
@@ -97,7 +97,7 @@
   // Login with Twitter
   function loginWithTwitter() {
       var provider =  new firebase.auth.TwitterAuthProvider();
-      firebase.auth().signInWithPopUp(provider).then(function(result) {
+      firebase.auth().signInWithPopup(provider).then(function(result) {
           userCredential(result);
       }).catch(function(err) {
           alert('err:' + err);
@@ -107,12 +107,11 @@
 // Storing user credentials to database
 function userCredential(result){
   var user = result.user;
-  // console.log(user, 'user credentials')
-  $('#avatar').val(user.photoUrl);
-  $('#displayName').val(user.displayName);
+//  $('#avatar').html(user.photoUrl);
+  $('#displayName').html(user.displayName);
+  console.log(user, 'The users credential');
   firebase.database().ref('users/' + user.uid).set({
     username: user.displayName,
     email: user.email,
-    avatar: user.photoUrl
   });
 }

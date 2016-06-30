@@ -14,6 +14,49 @@
 </head>
 
 <body>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">chatterBase</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">Link</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Another action</a></li>
+            <li><a href="#">Something else here</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">Separated link</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="#">One more separated link</a></li>
+          </ul>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#">Link</a></li>
+        <li class="">
+          <ul class="d">
+            <li id="avatar"></li>
+            <li id="displayName"></li>
+          </ul>
+        </li>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
     <div class="container">
         <div class="col-sm-8 col-sm-offset-2">
             <div class="clearfix top-bar">
@@ -30,12 +73,13 @@
             </div>
         </div>
         <div class="col-sm-8 col-sm-offset-2">
-            <div id="signin-btn" class="btn btn-success btn-block" onclick="loginWithGoogle()">Sign Up With google</div>
-            <div id="signin-btn" class="btn btn-success btn-block" onclick="loginWithTwitter()">Sign Up With google</div>
+            <h2>Login with</h2>
+            <div id="signin-btn" class="btn btn-danger btn-sm" onclick="loginWithGoogle()"><i class="fa fa-google"></i></div>
+            <div id="signin-btn" class="btn btn-primary btn-sm" onclick="loginWithTwitter()"><i class="fa fa-twitter"></i></div>
 
-            <div id="signin-btn" class="btn btn-success btn-block" onclick="loginWithFacebook()">Sign Up With google</div>
+            <div id="signin-btn" class="btn btn-primary btn-sm" onclick="loginWithFacebook()"><i class="fa fa-facebook"></i></div>
 
-            <div id="signin-btn" class="btn btn-success btn-block" onclick="loginWithGitHub()">Sign Up With google</div>
+            <div id="signin-btn" class="btn btn-success btn-sm" onclick="loginWithGithub()"><i class="fa fa-github"></i></div>
             <div id="contribute">
                 <p><strong>Contribute <small>(Select an emoji to add it to the story)</small> <span class="pull-right" onclick="generateRandomEmoji()"><i class="fa fa-refresh"> Refresh</i></span></strong></p>
                 <div id="options"></div>
