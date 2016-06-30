@@ -74,12 +74,15 @@
         </div>
         <div class="col-sm-8 col-sm-offset-2">
             <h2>Login with</h2>
-            <div id="signin-btn" class="btn btn-danger btn-sm" onclick="loginWithGoogle()"><i class="fa fa-google"></i></div>
-            <div id="signin-btn" class="btn btn-primary btn-sm" onclick="loginWithTwitter()"><i class="fa fa-twitter"></i></div>
+            <div id="signin-btn">
+            <div class="btn btn-danger btn-sm" onclick="loginWithGoogle()"><i class="fa fa-google"></i></div>
+            <div class="btn btn-primary btn-sm" onclick="loginWithTwitter()"><i class="fa fa-twitter"></i></div>
 
-            <div id="signin-btn" class="btn btn-primary btn-sm" onclick="loginWithFacebook()"><i class="fa fa-facebook"></i></div>
+            <div class="btn btn-primary btn-sm" onclick="loginWithFacebook()"><i class="fa fa-facebook"></i></div>
 
-            <div id="signin-btn" class="btn btn-success btn-sm" onclick="loginWithGithub()"><i class="fa fa-github"></i></div>
+            <div class="btn btn-success btn-sm" onclick="loginWithGithub()"><i class="fa fa-github"></i></div>
+                
+            </div>
             <div id="contribute">
                 <p><strong>Contribute <small>(Select an emoji to add it to the story)</small> <span class="pull-right" onclick="generateRandomEmoji()"><i class="fa fa-refresh"> Refresh</i></span></strong></p>
                 <div id="options"></div>

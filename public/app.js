@@ -66,7 +66,7 @@
           }
       })
   }
-   // Login with google
+  // Login with google
   function loginWithGoogle() {
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -96,7 +96,7 @@
   }
   // Login with Twitter
   function loginWithTwitter() {
-      var provider =  new firebase.auth.TwitterAuthProvider();
+      var provider = new firebase.auth.TwitterAuthProvider();
       firebase.auth().signInWithPopup(provider).then(function(result) {
           userCredential(result);
       }).catch(function(err) {
@@ -104,14 +104,36 @@
       })
   }
 
-// Storing user credentials to database
-function userCredential(result){
-  var user = result.user;
-//  $('#avatar').html(user.photoUrl);
-  $('#displayName').html(user.displayName);
-  console.log(user, 'The users credential');
-  firebase.database().ref('users/' + user.uid).set({
-    username: user.displayName,
-    email: user.email,
+  // Storing user credentials to database
+  function userCredential(result) {
+      var user = result.user;
+      //  $('#avatar').html(user.photoUrl);
+      $('#displayName').html(user.displayName);
+      firebase.database().ref('users/' + user.uid).set({
+          username: user.displayName,
+          email: user.email,
+      });
+  }
+
+  //  signout from firebase
+  function logout() {
+      firebase.auth().signOut()
+          .then(function() {
+              console.log('You  are logged out');
+          }, function(err) {
+              console.log('err:' + err);
+          })
+  }
+
+  // Ensure a user autheticates before he contribute
+  firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+          $('#logout-btn').show();
+          $('#signin-btn').hide();
+          $('#contribute').show();
+      } else {
+          $('#logout-btn').hide();
+          $('#signin-btn').show();
+          $('#contribute').hide();
+      }
   });
-}
