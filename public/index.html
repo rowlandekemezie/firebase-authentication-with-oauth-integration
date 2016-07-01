@@ -8,55 +8,67 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
+    <script src="https://cdn.auth0.com/js/lock-9.min.js"></script>
+    <script src="https://cdn.auth0.com/w2/auth0-6.7.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-    <script src="emoji.js"></script>
-    <script src="app.js"></script>
+    <style>
+    .em {
+        width: 32px;
+        height: 32px;
+        margin-right: 25px;
+        margin-bottom: 25px;
+    }
+    
+    .top-bar {
+        margin-top: 25px;
+    }
+    </style>
 </head>
 
 <body>
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#">chatterBase</a>
-    </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Link</a></li>
-        <li class="">
-          <ul class="d">
-            <li id="avatar"></li>
-            <li id="displayName"></li>
-          </ul>
-        </li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-</nav>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">chatterBase</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Link</a></li>
+                    <li class="">
+                        <ul class="d">
+                            <img src="" id="avatar" width="30" height="30" class="img-responsive img-rounded" />
+                            <li id="displayName"></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
     <div class="container">
         <div class="col-sm-8 col-sm-offset-2">
             <div class="clearfix top-bar">
@@ -75,13 +87,11 @@
         <div class="col-sm-8 col-sm-offset-2">
             <h2>Login with</h2>
             <div id="signin-btn">
-            <div class="btn btn-danger btn-sm" onclick="loginWithGoogle()"><i class="fa fa-google"></i></div>
-            <div class="btn btn-primary btn-sm" onclick="loginWithTwitter()"><i class="fa fa-twitter"></i></div>
-
-            <div class="btn btn-primary btn-sm" onclick="loginWithFacebook()"><i class="fa fa-facebook"></i></div>
-
-            <div class="btn btn-success btn-sm" onclick="loginWithGithub()"><i class="fa fa-github"></i></div>
-                
+                <button class="btn btn-danger btn-sm" onclick="loginWithAuth0()"><i class="fa fa-sign-in"></i></button>
+                <button class="btn btn-danger btn-sm" onclick="loginWithGoogle()"><i class="fa fa-google"></i></button>
+                <button class="btn btn-primary btn-sm" onclick="loginWithTwitter()"><i class="fa fa-twitter"></i></button>
+                <button class="btn btn-primary btn-sm" onclick="loginWithFacebook()"><i class="fa fa-facebook"></i></button>
+                <button class="btn btn-success btn-sm" onclick="loginWithGithub()"><i class="fa fa-github"></i></button>
             </div>
             <div id="contribute">
                 <p><strong>Contribute <small>(Select an emoji to add it to the story)</small> <span class="pull-right" onclick="generateRandomEmoji()"><i class="fa fa-refresh"> Refresh</i></span></strong></p>
@@ -91,6 +101,10 @@
         <div class="col-sm-8 col-sm-offset-2">
             <h2 class="text-center">Stories</h2>
             <div id="stories"></div>
+        </div>
     </div>
-  </body>
+    <script src="./emoji.js"></script>
+    <script src="./app.js"></script>
+</body>
+
 </html>
