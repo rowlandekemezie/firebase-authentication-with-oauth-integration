@@ -1,9 +1,18 @@
+  // variable for authentiation
+  var AUTH0_CLIENT_ID = "2HkpGom87ZurLARHEOGqMyNr34XU6dzD";
+  var AUTH0_DOMAIN = "rownet.auth0.com";
+  var API_KEY = "AIzaSyBTJyfhWFsbdG0oTC08U45BNqo2WVDPP_I";
+  var AUTH0_DOMAIN = "chattbase-14018.firebaseapp.com";
+  var DATABASE_URL = "https://chattbase-14018.firebaseio.com";
+  var STORAGEBUCKET = "chattbase-14018.appspot.com";
+
+
   // Initialize Firebase
   var config = {
-      apiKey: "AIzaSyBTJyfhWFsbdG0oTC08U45BNqo2WVDPP_I",
-      authDomain: "chattbase-14018.firebaseapp.com",
-      databaseURL: "https://chattbase-14018.firebaseio.com",
-      storageBucket: "chattbase-14018.appspot.com",
+      apiKey: API_KEY,
+      authDomain: AUTH0_DOMAIN,
+      databaseURL: DATABASE_URL,
+      storageBucket: STORAGEBUCKET,
   };
   firebase.initializeApp(config);
 
@@ -66,7 +75,7 @@
           }
       })
   }
-  // Login with google
+  // Login with google for use with the firebase Auth
   function loginWithGoogle() {
       var provider = new firebase.auth.GoogleAuthProvider();
       firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -107,16 +116,35 @@
   // Storing user credentials to database
   function userCredential(result) {
       var user = result.user;
-      //  $('#avatar').html(user.photoUrl);
-      $('#displayName').html(user.displayName);
-      firebase.database().ref('users/' + user.uid).set({
-          username: user.displayName,
-          email: user.email,
-      });
+      var profile = localStorage.getItem('profile');
+      profile = JSON.parse(profile);
+      if (profile) {
+          $('#avatar').attr('src', profile.picture);
+          $('#displayName').html(profile.name);
+          firebase.database().ref('users/' + profile.user_id).set({
+              username: profile.name,
+              email: profile.email,
+          });
+      } else {
+        var profile;
+
+          for (var i = 0; i < localStorage.length; i++) {
+              if (localStorage.key(i).match(/firebase:authUser:.*/)) {
+                  profile = JSON.parse(localStorage.getItem(localStorage.key(i)));
+              }
+          }
+          $('#avatar').attr('src', profile.photoURL);
+          $('#displayName').html(profile.displayName);
+          firebase.database().ref('users/' + profile.uid).set({
+              username: profile.displayName,
+              email: profile.email,
+          });
+      }
   }
 
   //  signout from firebase
   function logout() {
+      localStorage.removeItem('profile')
       firebase.auth().signOut()
           .then(function() {
               console.log('You  are logged out');
@@ -125,15 +153,54 @@
           })
   }
 
+  // Auth with Auth0
+  function loginWithAuth0() {
+    alert('Am here man')
+      var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN);
+      var auth0 = new Auth0({ domain: AUTH0_DOMAIN, clientID: AUTH0_CLIENT_ID });
+      lock.show({}, function(err, profile, id_token) {
+        console.log()
+
+          localStorage.setItem('profile', JSON.stringify(profile));
+          var options = {
+              api: 'firebase',
+              id_token: id_token,
+              target: AUTH0_CLIENT_ID,
+              scope: 'openid name email name'
+          };
+
+          // Make a call to oauth /delegate
+          auth0.getDelegationToken(options, function(err, result) {
+              if (!err) {
+                  firebase.auth().signInWithCustomToken(result.id_token).then(function(result) {
+                      userCredential(result);
+                  }).catch(function(err) {
+                      console.log('err ' + err)
+                  })
+
+              }
+
+          });
+
+      }, function(err) {
+          console.log('err: ' + err);
+      });
+  }
+
+
   // Ensure a user autheticates before he contribute
   firebase.auth().onAuthStateChanged(function(user) {
+      var profile = localStorage.getItem('profile');
+      profile = JSON.parse(profile);
       if (user) {
           $('#logout-btn').show();
           $('#signin-btn').hide();
           $('#contribute').show();
+          $('#email').show().append('<span> Welcome: <strong>' + profile.name + '</strong></span>')
       } else {
           $('#logout-btn').hide();
           $('#signin-btn').show();
           $('#contribute').hide();
+          $('#email').hide().empty();
       }
   });
