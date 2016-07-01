@@ -12,7 +12,7 @@
       apiKey: API_KEY,
       authDomain: AUTH0_DOMAIN,
       databaseURL: DATABASE_URL,
-      storageBucket: STORAGEBUCKET,
+      storageBucket: STORAGEBUCKET
   };
   firebase.initializeApp(config);
 
@@ -128,7 +128,7 @@
       } else {
         var profile;
 
-          for (var i = 0; i < localStorage.length; i++) {
+          for (var i = 0, n = localStorage.length; i < n; i++) {
               if (localStorage.key(i).match(/firebase:authUser:.*/)) {
                   profile = JSON.parse(localStorage.getItem(localStorage.key(i)));
               }
@@ -155,12 +155,10 @@
 
   // Auth with Auth0
   function loginWithAuth0() {
-    alert('Am here man')
       var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN);
       var auth0 = new Auth0({ domain: AUTH0_DOMAIN, clientID: AUTH0_CLIENT_ID });
       lock.show({}, function(err, profile, id_token) {
-        console.log()
-
+        alert('here man')
           localStorage.setItem('profile', JSON.stringify(profile));
           var options = {
               api: 'firebase',
