@@ -15,7 +15,7 @@
   };
   firebase.initializeApp(config);
 
-
+  // Stories object in the firebase database
   firebase.database().ref('stories').on('value', function(data) {
       $('#stories').empty();
       data.forEach(function(story) {
@@ -23,7 +23,7 @@
       });
   });
 
-
+  // Story object in the firebase database
   firebase.database().ref('story').on('value', function(data) {
       $('#story').empty()
       data.forEach(function(data) {
@@ -32,7 +32,7 @@
       })
   })
 
-
+  // Generate a story
   function generateStory(story) {
       var $div = $('<div>');
       $('#stories').prepend($div);
@@ -41,6 +41,7 @@
       })
   }
 
+  // Generating random emojis for story telling
   function generateRandomEmoji() {
       $('#options').empty();
       var number = randomNumber();
@@ -165,7 +166,7 @@
               scope: 'openid email name'
           };
 
-          // Make a call to oauth /delegate
+          // Make a call to oauth /delegate to exchange token with Firebase
           auth0.getDelegationToken(options, function(err, result) {
               if (!err) {
                   firebase.auth().signInWithCustomToken(result.id_token).then(function(result) {
@@ -184,7 +185,7 @@
   }
 
 
-  // Ensure a user autheticates before he contributes
+  // Ensure a user autheticates before he contribute
   firebase.auth().onAuthStateChanged(function(user) {
       var profile = localStorage.getItem('profile');
       profile = JSON.parse(profile);
