@@ -1,4 +1,4 @@
-  // variable for authentiation
+  // Variable for authentiation
   var AUTH0_CLIENT_ID = 'fill in your client id';
   var AUTH0_DOMAIN = 'Your autho domain';
   var API_KEY = 'Your api key';
@@ -142,7 +142,7 @@
       }
   }
 
-  //  signout from firebase
+  //  Signout implementation
   function logout() {
       localStorage.removeItem('profile')
       firebase.auth().signOut()
@@ -153,13 +153,11 @@
           })
   }
 
-  // Auth with Auth0
+  // Login with Auth0
   function loginWithAuth0() {
       var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN);
       var auth0 = new Auth0({ domain: AUTH0_DOMAIN, clientID: AUTH0_CLIENT_ID });
-      alert('here man')
       lock.show({ focusInput: false, popup: true }, function(err, profile, id_token) {
-        alert('Here in the lock.show function')
           localStorage.setItem('profile', JSON.stringify(profile));
           var options = {
               api: 'firebase',
@@ -187,7 +185,7 @@
   }
 
 
-  // Ensure a user autheticates before he contribute
+  // Ensure a user autheticates before he contributes
   firebase.auth().onAuthStateChanged(function(user) {
       var profile = localStorage.getItem('profile');
       profile = JSON.parse(profile);
