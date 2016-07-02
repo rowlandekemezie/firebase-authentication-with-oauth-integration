@@ -1,10 +1,10 @@
   // variable for authentiation
-  var AUTH0_CLIENT_ID = 'fill in your client id';
-  var AUTH0_DOMAIN = 'Your autho domain';
-  var API_KEY = 'Your api key';
-  var FIREBASE_AUTH0_DOMAIN = 'Your firebase domain';
-  var DATABASE_URL = 'Your firebase url';
-  var STORAGEBUCKET = 'Your storage bucket';
+  var AUTH0_CLIENT_ID = '2HkpGom87ZurLARHEOGqMyNr34XU6dzD';
+  var AUTH0_DOMAIN = 'rownet.auth0.com';
+  var API_KEY = 'AIzaSyBTJyfhWFsbdG0oTC08U45BNqo2WVDPP_I';
+  var FIREBASE_AUTH0_DOMAIN = 'chattbase-14018.firebaseapp.com';
+  var DATABASE_URL = 'https://chattbase-14018.firebaseio.com';
+  var STORAGEBUCKET = 'chattbase-14018.appspot.com';
 
 
   // Initialize Firebase
@@ -157,9 +157,7 @@
   function loginWithAuth0() {
       var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN);
       var auth0 = new Auth0({ domain: AUTH0_DOMAIN, clientID: AUTH0_CLIENT_ID });
-      alert('here man')
       lock.show({ focusInput: false, popup: true }, function(err, profile, id_token) {
-        alert('Here in the lock.show function')
           localStorage.setItem('profile', JSON.stringify(profile));
           var options = {
               api: 'firebase',
