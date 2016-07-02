@@ -141,7 +141,7 @@
       }
   }
 
-  //  signout from firebase
+  //  Signout implementation
   function logout() {
       localStorage.removeItem('profile')
       firebase.auth().signOut()
@@ -152,7 +152,7 @@
           })
   }
 
-  // Auth with Auth0
+  // Login with Auth0
   function loginWithAuth0() {
       var lock = new Auth0Lock(AUTH0_CLIENT_ID, AUTH0_DOMAIN);
       var auth0 = new Auth0({ domain: AUTH0_DOMAIN, clientID: AUTH0_CLIENT_ID });
@@ -184,7 +184,7 @@
   }
 
 
-  // Ensure a user autheticates before he contribute
+  // Ensure a user autheticates before he contributes
   firebase.auth().onAuthStateChanged(function(user) {
       var profile = localStorage.getItem('profile');
       profile = JSON.parse(profile);
